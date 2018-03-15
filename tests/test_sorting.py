@@ -32,5 +32,3 @@ class TestRandomizedQuicksort(unittest.TestCase):
         self.assertEqual(randomized_quicksort([6, 5]), [5, 6])
         self.assertEqual(randomized_quicksort([]), [])
         self.assertEqual(randomized_quicksort([5, 5, 5, 5, 5]), [5, 5, 5, 5, 5])
-
-unittest.main(exit = False)
