@@ -5,8 +5,6 @@ def quicksort(array):
 def inplace_quicksort(array, start, end):
     if start >= end:
         return
-    if len(array) < 2:
-        return
     lptr = start
     rptr = end - 1
     pivot = array[end]
