@@ -14,7 +14,7 @@ def jump_search(array, element):
             return i
         else:
             break
-    for j in xrange(pointer, pointer + interval):
+    for j in range(pointer, pointer + interval):
         if array[j] == element:
             return j
     return -1
