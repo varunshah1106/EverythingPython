@@ -31,10 +31,9 @@ class TestInterpolationSearch(unittest.TestCase):
         self.assertEqual(interpolation_search([1, 2, 3, 4, 500], 3), 2)
         self.assertEqual(interpolation_search([0, 1, 2, 3, 4, 500], 0), 0)
         self.assertEqual(interpolation_search([0, 1, 2, 3, 4, 500], -5), -1)
-        self.assertEqual(interpolation_search([-500, 1, 2, 3, 4, 5], 5), 5)
         self.assertEqual(interpolation_search([], 3), -1)
         self.assertEqual(interpolation_search([1, 2, 3, 4, 5], None), -1)
-
+        self.assertEqual(interpolation_search([-500, -4, -3, -2, -1, 50], 50), 5)
 
 class TestJumpSearch(unittest.TestCase):
     def test(self):
