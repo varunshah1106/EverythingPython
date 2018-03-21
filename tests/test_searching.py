@@ -1,5 +1,6 @@
 from searching.linear_search import linear_search
 from searching.binary_search import binary_search
+from searching.interpolation_search import interpolation_search
 
 import unittest
 
@@ -18,3 +19,11 @@ class TestBinarySearch(unittest.TestCase):
         self.assertEqual(binary_search([1, 2, 3, 4, 5], 0), -1)
         self.assertEqual(binary_search([], 3), -1)
         self.assertEqual(binary_search([1, 2, 3, 4, 5], None), -1)
+
+
+class TestInterpolationSearch(unittest.TestCase):
+    def test(self):
+        self.assertEqual(interpolation_search([1, 2, 3, 4, 5], 3), 2)
+        self.assertEqual(interpolation_search([1, 2, 3, 4, 5], 0), -1)
+        self.assertEqual(interpolation_search([], 3), -1)
+        self.assertEqual(interpolation_search([1, 2, 3, 4, 5], None), -1)
