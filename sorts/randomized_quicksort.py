@@ -8,8 +8,6 @@ def randomized_quicksort(array):
 def inplace_randomized_quicksort(array, start, end):
     if start >= end:
         return
-    if len(array) < 2:
-        return
     lptr = start
     rptr = end - 1
     pivot_index = randint(start, end)
