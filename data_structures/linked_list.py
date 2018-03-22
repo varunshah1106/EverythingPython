@@ -70,23 +70,28 @@ class LinkedList(object):
         return -1
 
     def remove(self, data):
-        if not data or not self.head:
+        if not self.head:
             return False
         node = self.head
         counter = 0
         while node:
             if node.data == data:
                 self.removeAt(index=counter)
+                return True
             else:
                 counter += 1
                 node = node.next
-        return True
+        return False
 
     def removeAt(self, index):
         if index >= self.__length:
             raise IndexError
-            return
-        previous_node = nodeAt(index - 1)
+        if index == 0:
+            self.head.next.previous = None
+            self.head = self.head.next
+            self.__length -= 1
+            return True
+        previous_node = self.nodeAt(index - 1)
         node = previous_node.next
         if node == self.tail:
             previous_node.next = None
@@ -101,17 +106,16 @@ class LinkedList(object):
     def valueAt(self, index):
         if index >= self.__length:
             raise IndexError
-            return
         node = self.head
         for i in xrange(index):
             node = node.next
         return node.data
 
-    def indexOf(self, node):
+    def indexOf(self, data):
         pointer = self.head
         counter = 0
         while pointer:
-            if pointer == node:
+            if pointer.data == data:
                 return counter
             else:
                 counter += 1
@@ -119,31 +123,46 @@ class LinkedList(object):
         return -1
 
     def nodeAt(self, index):
-        if index >= self.__length:
+        if index >= self.__length or index < 0:
             raise IndexError
         node = self.head
-        for i in xrange(index):
+        for i in range(index):
             node = node.next
         return node
 
-    def insert(self, data, index = None):
-        if not index:
-            node = Node(data)
-            if not self.head:
-                self.head = node
-                self.tail = node
-                self.__length += 1
-            else:
-                node.previous = self.tail.previous
-                self.tail = node
-                self.__length += 1
-        elif index <= self.__length:
-            node = Node(data)
-            previous_node = nodeAt(index - 1)
-            node.next = previous_node.next
-            node.previous = previous_node
-            previous_node.next = node
-            node.next.previous = node
+    def append(self, data):
+        node = Node(data)
+        if not self.head:
+            self.head = node
         else:
+            self.tail.next = node
+            node.previous = self.tail
+        self.tail = node
+        self.__length += 1
+        return
+
+    def insert(self, data, index):
+        node = Node(data)
+        if index < 0 or index > self.__length:
             raise IndexError
+        if not self.head:
+            self.head = node
+            self.tail = node
+            self.__length += 1
+            return
+        if index == 0:
+            node.next = self.head
+            self.head.previous = node
+            self.head = node
+            self.__length += 1
+            return
+        if index == self.__length:
+            self.append(data)
+            return
+        previous_node = self.nodeAt(index - 1)
+        previous_node.next.previous = node
+        node.next = previous_node.next
+        node.previous = previous_node
+        previous_node.next = node
+        self.__length += 1
         return
