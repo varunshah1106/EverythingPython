@@ -18,17 +18,26 @@ class TestLinearSearch(unittest.TestCase):
 class TestBinarySearch(unittest.TestCase):
     def test(self):
         self.assertEqual(binary_search([1, 2, 3, 4, 5], 3), 2)
+        self.assertEqual(binary_search([1, 2, 3, 4, 5], 1), 0)
+        self.assertEqual(binary_search([1, 2, 3, 4, 5], 5), 4)
         self.assertEqual(binary_search([1, 2, 3, 4, 5], 0), -1)
+        self.assertEqual(binary_search([1, 2, 3, 4, 5], 8), -1)
         self.assertEqual(binary_search([], 3), -1)
         self.assertEqual(binary_search([1, 2, 3, 4, 5], None), -1)
 
 
 class TestInterpolationSearch(unittest.TestCase):
-    def test(self):
-        self.assertEqual(interpolation_search([1, 2, 3, 4, 5], 3), 2)
-        self.assertEqual(interpolation_search([1, 2, 3, 4, 5], 0), -1)
+    def test_element_found(self):
+        self.assertEqual(interpolation_search([1, 2, 3, 4, 500], 3), 2)
+        self.assertEqual(interpolation_search([0, 1, 2, 3, 4, 500], 0), 0)
+        self.assertEqual(interpolation_search([0, 1, 2, 3, 4, 500], 1), 1)
+        self.assertEqual(interpolation_search([0, 1, 2, 3, 4, 500], 2), 2)
+        self.assertEqual(interpolation_search([0, 1, 2, 3, 4, 500], 3), 3)
+        self.assertEqual(interpolation_search([0, 1, 2, 3, 4, 500], -5), -1)
         self.assertEqual(interpolation_search([], 3), -1)
         self.assertEqual(interpolation_search([1, 2, 3, 4, 5], None), -1)
+        self.assertEqual(interpolation_search([-500, -4, -3, -2, -1, 50], 50), 5)
+        self.assertEqual(interpolation_search([5], 5), 0)
 
 
 class TestJumpSearch(unittest.TestCase):

@@ -1,9 +1,9 @@
 def interpolation_search(array, element):
-    if not array or not element:
+    if not array or element is None:
         return -1
     start = 0
     end = len(array) - 1
-    while array[start] <= element <= array[end]:
+    while array[start] <= element <= array[end] and start != end:
         slope = (end - start)/(array[end] - array[start])
         middle = int(start + (element - array[start]) * slope)
         if array[middle] < element:

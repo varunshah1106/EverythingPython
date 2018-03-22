@@ -2,7 +2,7 @@ import math
 
 
 def jump_search(array, element):
-    if not array or not element:
+    if not array or element is None:
         return -1
     n = len(array)
     interval = int(math.sqrt(n))
