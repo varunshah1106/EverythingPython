@@ -107,7 +107,7 @@ class LinkedList(object):
         if index >= self.__length:
             raise IndexError
         node = self.head
-        for i in xrange(index):
+        for i in range(index):
             node = node.next
         return node.data
 
