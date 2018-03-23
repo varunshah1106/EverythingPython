@@ -2,3 +2,4 @@ pytest
 coveralls
 pytest-cov
 python-coveralls
+mock

@@ -17,8 +17,11 @@ class LinkedList(object):
         new_list = LinkedList()
         node = self.head
         while node:
-            new_list.insert(node.data)
+            new_list.append(node.data)
             node = node.next
+        new_list.head = self.head
+        new_list.tail = self.tail
+        new_list.__length = self.__length
         new_list.extend(second)
         return new_list
 
@@ -37,7 +40,7 @@ class LinkedList(object):
         node = self.head
         string = ''
         while node:
-            string = string + str(node.data) + ' --->'
+            string = string + str(node.data) + ' ---> '
             node = node.next
         return string[:-5]
 
@@ -45,6 +48,13 @@ class LinkedList(object):
         return self.__length
 
     def extend(self, other):
+        self.__length += other.__length
+        if not other.head:
+            return
+        if not self.head:
+            self.head = other.head
+            self.tail = other.tail
+            return
         self.tail.next = other.head
         other.head.previous = self.tail
         self.tail = other.tail
@@ -53,8 +63,9 @@ class LinkedList(object):
     def reverse(self):
         node = self.head
         while node:
+            next_node = node.next
             node.previous, node.next = node.next, node.previous
-            node = node.next
+            node = next_node
         self.head, self.tail = self.tail, self.head
         return
 
