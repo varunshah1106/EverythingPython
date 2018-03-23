@@ -58,9 +58,6 @@ class TestLinkedList(unittest.TestCase):
         linked_list = LinkedList()
         with self.assertRaises(IndexError) as error:
             linked_list.insert(data='sample data', index=1)
-            self.assertEqual(len(linked_list), 0)
-            self.assertEqual(linked_list.head, None)
-            self.assertEqual(linked_list.tail, None)
 
     def test_length_zero(self):
         linked_list = LinkedList()
@@ -102,7 +99,6 @@ class TestLinkedList(unittest.TestCase):
         linked_list.append(data=0)
         with self.assertRaises(IndexError) as error:
             self.assertEqual(linked_list.nodeAt(index=-1), None)
-            self.assertEqual(linked_list.nodeAt(index=4), None)
 
     def test_find(self):
         linked_list = LinkedList()
@@ -352,13 +348,6 @@ class TestLinkedList(unittest.TestCase):
             self.assertEqual(data, counter)
             counter += 1
 
-    def test_iter_empty_list(self):
-        linked_list = LinkedList()
-        counter = 0
-        for data in linked_list:
-            self.assertEqual(data, counter)
-            counter += 1
-
     def test_add(self):
         linked_list = LinkedList()
         linked_list.append(data=0)
@@ -436,3 +425,14 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(linked_list2.head, None)
         self.assertEqual(linked_list2.tail, None)
         self.assertEqual(len(linked_list2), len1 + len2)
+
+    def test_str(self):
+        linked_list = LinkedList()
+        linked_list.append(data=0)
+        linked_list.append(data=1)
+        linked_list.append(data=2)
+        linked_list.append(data=3)
+        linked_list.append(data=4)
+        print(linked_list)
+        output = sys.stdout.getvalue().strip() # because stdout is an StringIO instance
+        self.assertEquals(output,'hello world!')
