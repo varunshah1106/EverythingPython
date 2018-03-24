@@ -1,7 +1,4 @@
-from __future__ import print_function
 from data_structures.linked_list import LinkedList
-from mock import patch
-from io import StringIO
 
 import unittest
 import sys
@@ -433,6 +430,23 @@ class TestLinkedList(unittest.TestCase):
         linked_list.append(data=2)
         linked_list.append(data=3)
         linked_list.append(data=4)
-        print(linked_list)
-        output = sys.stdout.getvalue().strip() # because stdout is an StringIO instance
-        self.assertEquals(output,'hello world!')
+
+        class StdOutMock(object):
+            def __init__(self):
+                self.data = []
+
+            def write(self, s):
+                self.data.append(s)
+
+            def __str__(self):
+                return "".join(self.data)
+
+        stdout_org = sys.stdout
+        stdout_mock = StdOutMock()
+        try:
+            sys.stdout = stdout_mock
+            print(linked_list)
+        finally:
+            sys.stdout = stdout_org
+
+        self.assertEquals(str(stdout_mock).strip(), '0 ---> 1 ---> 2 ---> 3 ---> 4')
