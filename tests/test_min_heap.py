@@ -71,7 +71,7 @@ class TestMinHeap(unittest.TestCase):
         with self.assertRaises(IndexError) as error:
             heap.remove(11)
 
-    def test_remove_invalid_index(self):
+    def test_remove_nonint_index(self):
         heap = MinHeap()
         array = [5, 4, 1, 6, 9, 7, 2, 8, 3]
         heap.heapify(array)
