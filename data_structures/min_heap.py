@@ -49,7 +49,9 @@ class MinHeap(object):
         return True
 
     def remove(self, index):
-        if index >= self.size or not isinstance(index, int):
+        if not isinstance(index, int):
+            raise TypeError
+        if index >= self.size:
             raise IndexError
         self.heapList[index] = self.heapList[-1]
         self.heapList.pop()

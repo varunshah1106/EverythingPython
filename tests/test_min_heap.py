@@ -75,7 +75,7 @@ class TestMinHeap(unittest.TestCase):
         heap = MinHeap()
         array = [5, 4, 1, 6, 9, 7, 2, 8, 3]
         heap.heapify(array)
-        with self.assertRaises(IndexError) as error:
+        with self.assertRaises(TypeError) as error:
             heap.remove('11')
 
     def test_delete_min(self):
