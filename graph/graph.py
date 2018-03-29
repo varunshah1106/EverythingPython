@@ -42,7 +42,7 @@ class Vertex(object):
             raise
 
     def get_neighbors(self):
-        return self.adjacent.keys()
+        return list(self.adjacent.keys())
 
     def get_weight(self, key):
         try:
@@ -56,7 +56,7 @@ class Graph(object):
     def __init__(self, directed=False):
         self.vertices = defaultdict()
         self.adjacency_list = defaultdict()
-        self.adjacency_matrix = [[]]
+        self.adjacency_matrix = []
         self._directed = directed
 
     def add(self, vertices):
@@ -66,22 +66,23 @@ class Graph(object):
             self.add_vertex(data=vertex)
 
     def add_vertex(self, data):
-        if not isinstance(data, str):
-            raise TypeError
         self.vertices[data] = Vertex(data=data)
         return
 
     def remove_vertex(self, data):
-        self.vertices.pop(data)
-        for vertex in vertices:
+        try:
+            self.vertices.pop(data)
+        except KeyError:
+            raise
+        for key, vertex in self.vertices.items():
             vertex.remove_neighbor(data)
         return
 
     def add_edge(self, data1, data2, weight=1):
         if data1 not in self.vertices:
-            self.add(data=data1)
+            self.add_vertex(data=data1)
         if data2 not in self.vertices:
-            self.add(data=data2)
+            self.add_vertex(data=data2)
         self.vertices[data1].add_neighbor(data=data2, weight=weight)
         if not self._directed:
             self.vertices[data2].add_neighbor(data=data1, weight=weight)
@@ -99,5 +100,8 @@ class Graph(object):
         pass
 
     def is_connected(self, data1, data2):
+        if data1 not in self.vertices or data2 not in self.vertices:
+            return False
         if data2 in self.vertices[data1].adjacent:
             return True
+        return False
