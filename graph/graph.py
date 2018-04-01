@@ -55,7 +55,6 @@ class Graph(object):
 
     def __init__(self, directed=False):
         self.vertices = defaultdict()
-        self.adjacency_list = defaultdict()
         self.adjacency_matrix = []
         self._directed = directed
 
