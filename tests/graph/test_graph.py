@@ -76,11 +76,6 @@ class TestVertex(unittest.TestCase):
         with self.assertRaises(KeyError) as error:
             self.assertEqual(vertex.get_weight('c'), None)
 
-    def test_add(self):
-        vertex = Vertex(data='a')
-        self.assertIsNone(vertex.add(neighbors=[]))
-        self.assertEqual(vertex.get_neighbors(), [])
-
     def test_add_neighbors_not_list(self):
         vertex = Vertex(data='a')
         with self.assertRaises(TypeError) as error:
