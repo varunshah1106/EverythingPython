@@ -54,7 +54,7 @@ class Vertex(object):
 class Graph(object):
 
     def __init__(self, directed=False):
-        self.vertices = defaultdict()
+        self.adjacency_list = defaultdict()
         self.adjacency_matrix = []
         self._directed = directed
 
@@ -65,31 +65,31 @@ class Graph(object):
             self.add_vertex(data=vertex)
 
     def add_vertex(self, data):
-        self.vertices[data] = Vertex(data=data)
+        self.adjacency_list[data] = Vertex(data=data)
         return
 
     def remove_vertex(self, data):
         try:
-            self.vertices.pop(data)
+            self.adjacency_list.pop(data)
         except KeyError:
             raise
-        for key, vertex in self.vertices.items():
+        for key, vertex in self.adjacency_list.items():
             vertex.remove_neighbor(data)
         return
 
     def add_edge(self, data1, data2, weight=1):
-        if data1 not in self.vertices:
+        if data1 not in self.adjacency_list:
             self.add_vertex(data=data1)
-        if data2 not in self.vertices:
+        if data2 not in self.adjacency_list:
             self.add_vertex(data=data2)
-        self.vertices[data1].add_neighbor(data=data2, weight=weight)
+        self.adjacency_list[data1].add_neighbor(data=data2, weight=weight)
         if not self._directed:
-            self.vertices[data2].add_neighbor(data=data1, weight=weight)
+            self.adjacency_list[data2].add_neighbor(data=data1, weight=weight)
         return
 
     def remove_edge(self, data1, data2):
-        self.vertices[data1].adjacent.pop(data2)
-        self.vertices[data2].adjacent.pop(data1)
+        self.adjacency_list[data1].adjacent.pop(data2)
+        self.adjacency_list[data2].adjacent.pop(data1)
         return
 
     def _convert_list_to_matrix(self):
@@ -99,8 +99,8 @@ class Graph(object):
         pass
 
     def is_connected(self, data1, data2):
-        if data1 not in self.vertices or data2 not in self.vertices:
+        if data1 not in self.adjacency_list or data2 not in self.adjacency_list:
             return False
-        if data2 in self.vertices[data1].adjacent:
+        if data2 in self.adjacency_list[data1].adjacent:
             return True
         return False
