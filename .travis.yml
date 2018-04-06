@@ -7,6 +7,6 @@ cache: pip
 install:
   - pip install -r requirements.txt
 script:
-  - py.test --cov=.
+  - py.test tests/ --cov=.
 after_success:
   - coveralls
