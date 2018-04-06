@@ -92,11 +92,11 @@ class Graph(object):
         self.adjacency_list[data2].adjacent.pop(data1)
         return
 
-    def _convert_list_to_matrix(self):
-        pass
-
-    def _convert_matrix_to_list(self):
-        pass
+    # def _convert_list_to_matrix(self):
+    #     pass
+    #
+    # def _convert_matrix_to_list(self):
+    #     pass
 
     def is_connected(self, data1, data2):
         if data1 not in self.adjacency_list or data2 not in self.adjacency_list:
