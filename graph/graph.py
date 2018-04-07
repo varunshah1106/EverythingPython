@@ -106,11 +106,11 @@ class Graph(object):
         queue = deque()
         in_degrees = {}
         topological = []
-        for i, vertex in self.adjacency_list.iteritems():
+        for i, vertex in self.adjacency_list.items():
             in_degrees[vertex.data] = in_degrees.get(vertex.data, 0)
             for neighbor in vertex.adjacent:
                 in_degrees[neighbor] = in_degrees.get(neighbor, 0) + 1
-        for i, vertex in self.adjacency_list.iteritems():
+        for i, vertex in self.adjacency_list.items():
             if in_degrees.get(vertex.data, -1) == 0:
                 queue.append(vertex)
         while queue:
