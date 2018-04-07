@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 
 
 class Vertex(object):
@@ -8,7 +8,6 @@ class Vertex(object):
             raise TypeError
         self.data = data
         self.adjacent = defaultdict()
-        self.in_degree = 0
         return
 
     def add(self, neighbors):
@@ -86,23 +85,13 @@ class Graph(object):
         self.adjacency_list[data1].add_neighbor(data=data2, weight=weight)
         if not self._directed:
             self.adjacency_list[data2].add_neighbor(data=data1, weight=weight)
-        else:
-            self.adjacency_list[data2].in_degree += 1
         return
 
     def remove_edge(self, data1, data2):
         self.adjacency_list[data1].adjacent.pop(data2)
         if not self._directed:
             self.adjacency_list[data2].adjacent.pop(data1)
-        else:
-            self.adjacency_list[data2].in_degree -= 1
         return
-
-    # def _convert_list_to_matrix(self):
-    #     pass
-    #
-    # def _convert_matrix_to_list(self):
-    #     pass
 
     def is_connected(self, data1, data2):
         if data1 not in self.adjacency_list or data2 not in self.adjacency_list:
@@ -110,3 +99,25 @@ class Graph(object):
         if data2 in self.adjacency_list[data1].adjacent:
             return True
         return False
+
+    def topological_sort(self):
+        if not self._directed:
+            raise TypeError
+        queue = deque()
+        in_degrees = {}
+        topological = []
+        for i, vertex in self.adjacency_list.iteritems():
+            in_degrees[vertex.data] = in_degrees.get(vertex.data, 0)
+            for neighbor in vertex.adjacent:
+                in_degrees[neighbor] = in_degrees.get(neighbor, 0) + 1
+        for i, vertex in self.adjacency_list.iteritems():
+            if in_degrees.get(vertex.data, -1) == 0:
+                queue.append(vertex)
+        while queue:
+            vertex = queue.pop()
+            topological.append(vertex.data)
+            for neighbor in vertex.adjacent:
+                in_degrees[neighbor] -= 1
+                if in_degrees[neighbor] == 0:
+                    queue.append(self.adjacency_list[neighbor])
+        return topological

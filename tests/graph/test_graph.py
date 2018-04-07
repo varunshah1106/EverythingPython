@@ -199,6 +199,16 @@ class TestUndirectedGraph(unittest.TestCase):
         self.assertFalse(graph.is_connected('a', 'b'))
         self.assertFalse(graph.is_connected('a', 'c'))
 
+    def test_topological_sort(self):
+        graph = Graph(directed=False)
+        graph.add_edge(data1='a', data2=123, weight=3)
+        graph.add_edge(data1='b', data2=123, weight=2)
+        graph.add_edge(data1='c', data2=123, weight=1)
+        graph.add_edge(data1='c', data2='a', weight=1)
+        with self.assertRaises(TypeError) as error:
+            t = graph.topological_sort()
+
+
 class TestDirectedGraph(unittest.TestCase):
 
     def test_graph_initialization(self):
@@ -220,18 +230,27 @@ class TestDirectedGraph(unittest.TestCase):
         graph.add_edge(data1='a', data2=123, weight=3)
         self.assertEqual(graph.adjacency_list['a'].adjacent[123], 3)
         self.assertEqual(graph.adjacency_list[123].adjacent, {})
-        self.assertEqual(graph.adjacency_list[123].in_degree, 1)
-        self.assertEqual(graph.adjacency_list['a'].in_degree, 0)
 
     def test_remove_edge(self):
         graph = Graph(directed=True)
         graph.add_edge(data1='a', data2=123, weight=3)
-        graph.add_edge(data1='b', data2=123, weight=3)
-        graph.add_edge(data1='c', data2=123, weight=3)
-        self.assertEqual(graph.adjacency_list[123].in_degree, 3)
+        graph.add_edge(data1='b', data2=123, weight=2)
+        graph.add_edge(data1='c', data2=123, weight=1)
+        self.assertEqual(graph.adjacency_list['a'].adjacent[123], 3)
+        self.assertEqual(graph.adjacency_list['b'].adjacent[123], 2)
+        self.assertEqual(graph.adjacency_list['c'].adjacent[123], 1)
         graph.remove_edge('a', 123)
-        self.assertEqual(graph.adjacency_list[123].in_degree, 2)
+        self.assertEqual(graph.adjacency_list['a'].adjacent, {})
         graph.remove_edge('b', 123)
-        self.assertEqual(graph.adjacency_list[123].in_degree, 1)
+        self.assertEqual(graph.adjacency_list['b'].adjacent, {})
         graph.remove_edge('c', 123)
-        self.assertEqual(graph.adjacency_list[123].in_degree, 0)
+        self.assertEqual(graph.adjacency_list['c'].adjacent, {})
+
+    def test_topological_sort(self):
+        graph = Graph(directed=True)
+        graph.add_edge(data1='a', data2=123, weight=3)
+        graph.add_edge(data1='b', data2=123, weight=2)
+        graph.add_edge(data1='c', data2=123, weight=1)
+        graph.add_edge(data1='c', data2='a', weight=1)
+        t = graph.topological_sort()
+        self.assertEqual(t.index(123), 3)
