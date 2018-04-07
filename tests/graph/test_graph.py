@@ -198,3 +198,40 @@ class TestUndirectedGraph(unittest.TestCase):
         self.assertTrue(graph.is_connected('a', 123))
         self.assertFalse(graph.is_connected('a', 'b'))
         self.assertFalse(graph.is_connected('a', 'c'))
+
+class TestDirectedGraph(unittest.TestCase):
+
+    def test_graph_initialization(self):
+        graph = Graph(directed=True)
+        self.assertEqual(set(list(graph.adjacency_list.keys())), set([]))
+        self.assertEqual(graph.adjacency_matrix, [])
+
+    def test_add_vertex(self):
+        graph = Graph(directed=True)
+        graph.add_vertex(data='a')
+        self.assertEqual(set(list(graph.adjacency_list.keys())), set(['a']))
+        graph.add_vertex(data=123)
+        self.assertEqual(set(list(graph.adjacency_list.keys())), set([123, 'a']))
+
+    def test_add_edge(self):
+        graph = Graph(directed=True)
+        graph.add_vertex(data='a')
+        graph.add_vertex(data=123)
+        graph.add_edge(data1='a', data2=123, weight=3)
+        self.assertEqual(graph.adjacency_list['a'].adjacent[123], 3)
+        self.assertEqual(graph.adjacency_list[123].adjacent, {})
+        self.assertEqual(graph.adjacency_list[123].in_degree, 1)
+        self.assertEqual(graph.adjacency_list['a'].in_degree, 0)
+
+    def test_remove_edge(self):
+        graph = Graph(directed=True)
+        graph.add_edge(data1='a', data2=123, weight=3)
+        graph.add_edge(data1='b', data2=123, weight=3)
+        graph.add_edge(data1='c', data2=123, weight=3)
+        self.assertEqual(graph.adjacency_list[123].in_degree, 3)
+        graph.remove_edge('a', 123)
+        self.assertEqual(graph.adjacency_list[123].in_degree, 2)
+        graph.remove_edge('b', 123)
+        self.assertEqual(graph.adjacency_list[123].in_degree, 1)
+        graph.remove_edge('c', 123)
+        self.assertEqual(graph.adjacency_list[123].in_degree, 0)

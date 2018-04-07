@@ -8,6 +8,7 @@ class Vertex(object):
             raise TypeError
         self.data = data
         self.adjacent = defaultdict()
+        self.in_degree = 0
         return
 
     def add(self, neighbors):
@@ -85,11 +86,16 @@ class Graph(object):
         self.adjacency_list[data1].add_neighbor(data=data2, weight=weight)
         if not self._directed:
             self.adjacency_list[data2].add_neighbor(data=data1, weight=weight)
+        else:
+            self.adjacency_list[data2].in_degree += 1
         return
 
     def remove_edge(self, data1, data2):
         self.adjacency_list[data1].adjacent.pop(data2)
-        self.adjacency_list[data2].adjacent.pop(data1)
+        if not self._directed:
+            self.adjacency_list[data2].adjacent.pop(data1)
+        else:
+            self.adjacency_list[data2].in_degree -= 1
         return
 
     # def _convert_list_to_matrix(self):
