@@ -208,6 +208,15 @@ class TestUndirectedGraph(unittest.TestCase):
         with self.assertRaises(TypeError) as error:
             t = graph.topological_sort()
 
+    def test_dfs(self):
+        graph = Graph(directed=False)
+        graph.add_edge(data1='a', data2=123, weight=3)
+        graph.add_edge(data1='b', data2=123, weight=2)
+        graph.add_edge(data1='c', data2=123, weight=1)
+        graph.add_edge(data1='c', data2='a', weight=1)
+        with self.assertRaises(TypeError) as error:
+            t = graph.dfs(node='c')
+
 
 class TestDirectedGraph(unittest.TestCase):
 
@@ -254,3 +263,22 @@ class TestDirectedGraph(unittest.TestCase):
         graph.add_edge(data1='c', data2='a', weight=1)
         t = graph.topological_sort()
         self.assertEqual(t.index(123), 3)
+
+    def test_topological_sort_empty_graph(self):
+        graph = Graph(directed=True)
+        t = graph.topological_sort()
+        self.assertEqual(t, [])
+
+    def test_dfs(self):
+        graph = Graph(directed=True)
+        graph.add_edge(data1='a', data2=123, weight=3)
+        graph.add_edge(data1=123, data2='b', weight=2)
+        graph.add_edge(data1='c', data2=123, weight=1)
+        graph.add_edge(data1='c', data2='a', weight=1)
+        t = graph.dfs(node='c')
+        self.assertEqual(t, set(['a', 123, 'b']))
+
+    def test_dfs_empty_graph(self):
+        graph = Graph(directed=True)
+        t = graph.dfs(node='c')
+        self.assertIsNone(t)

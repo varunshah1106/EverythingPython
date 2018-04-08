@@ -121,3 +121,17 @@ class Graph(object):
                 if in_degrees[neighbor] == 0:
                     queue.append(self.adjacency_list[neighbor])
         return topological
+
+    def dfs(self, node):
+        if not self._directed:
+            raise TypeError
+        if node not in self.adjacency_list:
+            return
+        visited = set()
+        dfs_stack = [node]
+        while dfs_stack:
+            vertex = dfs_stack.pop()
+            if vertex not in visited:
+                visited.add(vertex)
+                dfs_stack.extend(self.adjacency_list[vertex].adjacent)
+        return visited - set(node)
