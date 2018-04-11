@@ -2,6 +2,7 @@ def quicksort(array):
     inplace_quicksort(array, 0, len(array) - 1)
     return array
 
+
 def inplace_quicksort(array, start, end):
     if start >= end:
         return

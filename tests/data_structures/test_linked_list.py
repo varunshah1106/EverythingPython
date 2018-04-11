@@ -449,4 +449,5 @@ class TestLinkedList(unittest.TestCase):
         finally:
             sys.stdout = stdout_org
 
-        self.assertEqual(str(stdout_mock).strip(), '0 ---> 1 ---> 2 ---> 3 ---> 4')
+        self.assertEqual(str(stdout_mock).strip(),
+                         '0 ---> 1 ---> 2 ---> 3 ---> 4')

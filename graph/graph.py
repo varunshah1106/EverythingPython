@@ -13,7 +13,8 @@ class Vertex(object):
     def add(self, neighbors):
         if not neighbors:
             return
-        if not isinstance(neighbors, list) or not isinstance(neighbors[0], tuple):
+        if not isinstance(neighbors, list) or \
+                not isinstance(neighbors[0], tuple):
             raise TypeError
         for tup in neighbors:
             if not tup:
@@ -94,7 +95,8 @@ class Graph(object):
         return
 
     def is_connected(self, data1, data2):
-        if data1 not in self.adjacency_list or data2 not in self.adjacency_list:
+        if data1 not in self.adjacency_list or \
+                data2 not in self.adjacency_list:
             return False
         if data2 in self.adjacency_list[data1].adjacent:
             return True

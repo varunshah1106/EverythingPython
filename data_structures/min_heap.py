@@ -23,7 +23,8 @@ class MinHeap(object):
         while index != 0:
             parent = (index - 1) // 2
             if self.heapList[parent] > self.heapList[index]:
-                self.heapList[parent], self.heapList[index] = self.heapList[index], self.heapList[parent]
+                self.heapList[parent], self.heapList[index] = \
+                    self.heapList[index], self.heapList[parent]
             index = parent
         return
 
@@ -31,17 +32,21 @@ class MinHeap(object):
         while (index * 2 + 1) < self.size:
             min_child = self._minimum_child(index)
             if self.heapList[index] > self.heapList[min_child]:
-                self.heapList[index], self.heapList[min_child] = self.heapList[min_child], self.heapList[index]
+                self.heapList[index], self.heapList[min_child] = \
+                    self.heapList[min_child], self.heapList[index]
             index = min_child
         return
 
     def _minimum_child(self, index):
-        child1 = self.heapList[2 * index + 1] if (2 * index + 1) < self.size else None
-        child2 = self.heapList[2 * index + 2] if (2 * index + 2) < self.size else None
+        child1 = self.heapList[2 * index +
+                               1] if (2 * index + 1) < self.size else None
+        child2 = self.heapList[2 * index +
+                               2] if (2 * index + 2) < self.size else None
         return (2 * index + 1) if (child1 < child2) else (2 * index + 2)
 
     def insert(self, data):
-        if data is None or not (isinstance(data, str) or isinstance(data, int)):
+        if data is None or not (isinstance(data, str) or
+                                isinstance(data, int)):
             return False
         self.heapList.append(data)
         self.size += 1

@@ -36,14 +36,16 @@ class TestInterpolationSearch(unittest.TestCase):
         self.assertEqual(interpolation_search([0, 1, 2, 3, 4, 500], -5), -1)
         self.assertEqual(interpolation_search([], 3), -1)
         self.assertEqual(interpolation_search([1, 2, 3, 4, 5], None), -1)
-        self.assertEqual(interpolation_search([-500, -4, -3, -2, -1, 50], 50), 5)
+        self.assertEqual(interpolation_search(
+            [-500, -4, -3, -2, -1, 50], 50), 5)
         self.assertEqual(interpolation_search([5], 5), 0)
 
 
 class TestJumpSearch(unittest.TestCase):
     def test(self):
         self.assertEqual(jump_search([1, 2, 3, 4, 5], 3), 2)
-        self.assertEqual(jump_search([1, 2, 3, 4, 5, 9, 10, 15, 25, 100, 1000, 5000, 10000, 2000000], 5000), 11)
+        self.assertEqual(jump_search(
+            [1, 2, 3, 4, 5, 9, 10, 15, 25, 100, 1000, 5000], 5000), 11)
         self.assertEqual(jump_search([1, 2, 3, 4, 5], 0), -1)
         self.assertEqual(jump_search([], 3), -1)
         self.assertEqual(jump_search([1, 2, 3, 4, 5], None), -1)

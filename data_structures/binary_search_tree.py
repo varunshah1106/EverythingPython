@@ -69,7 +69,6 @@ class BinarySearchTree(object):
             node = node.left
         return node
 
-
     def inorder(self, node):
         if node:
             self.inorder(node.left)

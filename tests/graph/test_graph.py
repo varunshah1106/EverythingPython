@@ -97,7 +97,8 @@ class TestVertex(unittest.TestCase):
             tuple(['e'])
         ]
         vertex.add(neighbors=data)
-        self.assertEqual(set(list(vertex.get_neighbors())), set(['b', 'c', 'd', 'e']))
+        self.assertEqual(set(list(vertex.get_neighbors())),
+                         set(['b', 'c', 'd', 'e']))
         self.assertEqual(vertex.get_weight('b'), 3)
         self.assertEqual(vertex.get_weight('c'), 7)
         self.assertEqual(vertex.get_weight('d'), 1)
@@ -122,6 +123,7 @@ class TestVertex(unittest.TestCase):
         with self.assertRaises(TypeError) as error:
             vertex.add(neighbors=data)
 
+
 class TestUndirectedGraph(unittest.TestCase):
 
     def test_graph_initialization(self):
@@ -134,7 +136,8 @@ class TestUndirectedGraph(unittest.TestCase):
         graph.add_vertex(data='a')
         self.assertEqual(set(list(graph.adjacency_list.keys())), set(['a']))
         graph.add_vertex(data=123)
-        self.assertEqual(set(list(graph.adjacency_list.keys())), set([123, 'a']))
+        self.assertEqual(
+            set(list(graph.adjacency_list.keys())), set([123, 'a']))
 
     def test_add_edge(self):
         graph = Graph()
@@ -153,7 +156,8 @@ class TestUndirectedGraph(unittest.TestCase):
         graph = Graph()
         data = ['a', 'b', 'c', 123, 456, 'd']
         graph.add(vertices=data)
-        self.assertEqual(set(list(graph.adjacency_list.keys())), set([123, 456, 'a', 'b', 'c', 'd']))
+        self.assertEqual(set(list(graph.adjacency_list.keys())),
+                         set([123, 456, 'a', 'b', 'c', 'd']))
 
     def test_add_empty_list(self):
         graph = Graph()
@@ -173,7 +177,8 @@ class TestUndirectedGraph(unittest.TestCase):
         self.assertEqual(graph.adjacency_list['a'].adjacent[123], 3)
         graph.remove_vertex(123)
         self.assertEqual(set(list(graph.adjacency_list.keys())), set(['a']))
-        self.assertEqual(set(list(graph.adjacency_list['a'].adjacent)), set([]))
+        self.assertEqual(
+            set(list(graph.adjacency_list['a'].adjacent)), set([]))
 
     def test_remove_vertex_invalid(self):
         graph = Graph()
@@ -186,9 +191,12 @@ class TestUndirectedGraph(unittest.TestCase):
         graph.add_edge(data1='a', data2=123, weight=3)
         self.assertEqual(graph.adjacency_list['a'].adjacent[123], 3)
         graph.remove_edge('a', 123)
-        self.assertEqual(set(list(graph.adjacency_list.keys())), set([123, 'a']))
-        self.assertEqual(set(list(graph.adjacency_list['a'].adjacent)), set([]))
-        self.assertEqual(set(list(graph.adjacency_list[123].adjacent)), set([]))
+        self.assertEqual(
+            set(list(graph.adjacency_list.keys())), set([123, 'a']))
+        self.assertEqual(
+            set(list(graph.adjacency_list['a'].adjacent)), set([]))
+        self.assertEqual(
+            set(list(graph.adjacency_list[123].adjacent)), set([]))
 
     def test_is_connected(self):
         graph = Graph()
@@ -217,6 +225,15 @@ class TestUndirectedGraph(unittest.TestCase):
         with self.assertRaises(TypeError) as error:
             t = graph.dfs(node='c')
 
+    def test_bfs(self):
+        graph = Graph(directed=False)
+        graph.add_edge(data1='a', data2=123, weight=3)
+        graph.add_edge(data1='b', data2=123, weight=2)
+        graph.add_edge(data1='c', data2=123, weight=1)
+        graph.add_edge(data1='c', data2='a', weight=1)
+        with self.assertRaises(TypeError) as error:
+            t = graph.bfs(node='c')
+
 
 class TestDirectedGraph(unittest.TestCase):
 
@@ -230,7 +247,8 @@ class TestDirectedGraph(unittest.TestCase):
         graph.add_vertex(data='a')
         self.assertEqual(set(list(graph.adjacency_list.keys())), set(['a']))
         graph.add_vertex(data=123)
-        self.assertEqual(set(list(graph.adjacency_list.keys())), set([123, 'a']))
+        self.assertEqual(
+            set(list(graph.adjacency_list.keys())), set([123, 'a']))
 
     def test_add_edge(self):
         graph = Graph(directed=True)
