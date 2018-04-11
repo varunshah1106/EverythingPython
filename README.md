@@ -6,3 +6,6 @@ A collection of common data structures, algorithms, dynamic programming and mach
 
 # Code Coverage
 [![Coverage Status](https://coveralls.io/repos/github/varunshah1106/EverythingPython/badge.svg?branch=master)](https://coveralls.io/github/varunshah1106/EverythingPython?branch=master)
+
+# Linting
+[![Linty](https://www.lintyapp.com/repo/varunshah1106/EverythingPython/badge.svg)](https://www.lintyapp.com/repo/varunshah1106/EverythingPython)
