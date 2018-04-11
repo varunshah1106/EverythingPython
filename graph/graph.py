@@ -1,4 +1,4 @@
-from collections import defaultdict, deque
+from collections import defaultdict, deque, OrderedDict
 
 
 class Vertex(object):
@@ -127,11 +127,25 @@ class Graph(object):
             raise TypeError
         if node not in self.adjacency_list:
             return
-        visited = set()
+        visited = OrderedDict()
         dfs_stack = [node]
         while dfs_stack:
             vertex = dfs_stack.pop()
             if vertex not in visited:
-                visited.add(vertex)
-                dfs_stack.extend(self.adjacency_list[vertex].adjacent)
-        return visited - set(node)
+                visited[vertex] = True
+                dfs_stack.extend(self.adjacency_list[vertex].adjacent.keys())
+        return list(visited.keys())[1:]
+
+    def bfs(self, node):
+        if not self._directed:
+            raise TypeError
+        if node not in self.adjacency_list:
+            return
+        visited = OrderedDict()
+        bfs_queue = deque(node)
+        while bfs_queue:
+            vertex = bfs_queue.popleft()
+            if vertex not in visited:
+                visited[vertex] = True
+                bfs_queue.extend(self.adjacency_list[vertex].adjacent.keys())
+        return list(visited.keys())[1:]
