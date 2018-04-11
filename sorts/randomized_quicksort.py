@@ -5,6 +5,7 @@ def randomized_quicksort(array):
     inplace_randomized_quicksort(array, 0, len(array) - 1)
     return array
 
+
 def inplace_randomized_quicksort(array, start, end):
     if start >= end:
         return

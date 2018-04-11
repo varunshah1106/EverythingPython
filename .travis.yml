@@ -8,5 +8,6 @@ install:
   - pip install -r requirements.txt
 script:
   - py.test tests/ --cov=.
+  - pycodestyle --exclude=.coveragerc --exclude=.travis.yml --exclude=.venv .
 after_success:
   - coveralls

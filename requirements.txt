@@ -3,3 +3,4 @@ coveralls
 pytest-cov
 python-coveralls
 mock
+pycodestyle
